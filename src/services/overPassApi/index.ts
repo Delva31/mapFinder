@@ -6,7 +6,7 @@ const opUri = `https://overpass-api.de/api/interpreter`;
 const opUrlAddress = `https://nominatim.openstreetmap.org/search?format=json&q=`;
 
 
-async function getOPApiItem(lat, lng, radius, amenity) {
+async function getOPApiItem(lat: string, lng: string, radius: string, amenity: string) {
     try {
       const url = `${opUri}?data=[out:json];node(around:${radius},${lat},${lng})[amenity=${amenity}];out;`
 
@@ -19,12 +19,12 @@ async function getOPApiItem(lat, lng, radius, amenity) {
       return places;
       
     } catch (error) {
-      console.error("Error al obtener datos:", error.message);
+      console.error("Error al obtener datos:", error);
     }
 }
 
 
-const getAmenityByAddress = async (amenity, address, radius) => {
+const getAmenityByAddress = async (amenity: string, address: string, radius: string) => {
   if (!address) return;
 
   const url = `${opUrlAddress}${encodeURIComponent(address)}`;
