@@ -1,28 +1,18 @@
-const amenity = require('../../services/amenity/index.ts');
+const {getAmenities} = require('../../services/amenity');
 const config = require('../../config/global');
-
-
-const getAmenitiesAll  = async (req: any, res: any) => {
-
-    try {
-        const address = config.addressDefault;
-        const radius = config.radiusDefault;
-        const amenity = config.amenityDefault;
-        
-        const result =  await amenity.getAmenities(amenity, address, radius);
-        res.json(result);
-
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching amenities: '+ error });
-
-    }
-}
 
 
 const getAmenitiesFiltered = async (req: any, res: any) => {
     try {
-        const {address, radius, amenity} = req.query;
-        const result =  await amenity.getAmenities(amenity, address, radius);
+
+        const {addressQuery, radiusQuery, amenityQuery} = req.query;
+ 
+        const address = addressQuery ? addressQuery : config.addressDefault ;
+        const radius = radiusQuery ? radiusQuery : config.radiusDefault; 
+        const amenity = amenityQuery ? amenityQuery : config.amenityDefault;
+
+        const result =  await getAmenities(amenity, address, radius);
+        console.log(result)
         res.json(result);
 
     } catch (error) {
@@ -33,6 +23,5 @@ const getAmenitiesFiltered = async (req: any, res: any) => {
 
 
 module.exports = {
-    getAmenitiesAll,
     getAmenitiesFiltered
   };
