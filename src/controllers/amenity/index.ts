@@ -5,14 +5,15 @@ const config = require('../../config/global');
 const getAmenitiesFiltered = async (req: any, res: any) => {
     try {
 
-        const {addressQuery, radiusQuery, amenityQuery} = req.query;
- 
-        const address = addressQuery ? addressQuery : config.addressDefault ;
-        const radius = radiusQuery ? radiusQuery : config.radiusDefault; 
-        const amenity = amenityQuery ? amenityQuery : config.amenityDefault;
+        const {address, radius, amenity} = req.query;
 
-        const result =  await getAmenities(amenity, address, radius);
-        console.log(result)
+        console.log(req.query)
+ 
+        const addressQuery = address ? address : config.addressDefault ;
+        const radiusQuery = radius ? radius : config.radiusDefault; 
+        const amenityQuery = amenity ? amenity: config.amenityDefault;
+
+        const result =  await getAmenities(amenityQuery, addressQuery, radiusQuery);
         res.json(result);
 
     } catch (error) {
